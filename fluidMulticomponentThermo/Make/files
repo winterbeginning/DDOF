@@ -1,0 +1,5 @@
+tabulatedFluidMulticomponentThermophysicalTransportModels.C
+ddpolynomial/multicomponentThermo/psiMulticomponentThermo/psiMulticomponentThermos.C
+ddpolynomial/multicomponentThermo/rhoMulticomponentThermo/rhoMulticomponentThermos.C
+
+LIB = $(FOAM_USER_LIBBIN)/libtabulatedFluidMulticomponentThermophysicalTransportModels

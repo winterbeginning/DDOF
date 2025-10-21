@@ -1,0 +1,244 @@
+description: |-
+  Connaire, M. O., Curran, H J., Simmie, J. M., Pitz, W. J. and Westbrook, C.K., 
+  "A Comprehensive ModeLing Study of Hydrogen Oxidation", 
+  InternationaL JournaL of ChemicaL Kinetics, 36:603-622, 2004: UCRL-JC-152569.
+  UCRL-WEB-204236
+  Review and reLease date: May 19, 2004.
+  4/16/04 version 1a
+
+generator: ck2yaml
+input-files: [chem.inp, therm.dat, tran.dat]
+cantera-version: 3.1.0
+date: Tue, 21 Oct 2025 00:13:32 +0800
+
+units: {length: cm, time: s, quantity: mol, activation-energy: cal/mol}
+
+phases:
+- name: gas
+  thermo: ideal-gas
+  elements: [H, O, N, C, Al]
+  species: [AL, ALO, ALO2, AL2O, AL2O2, AL2O3, AL2O3(L), AL(L), O, O2, 
+      N2, H]
+  kinetics: gas
+  transport: mixture-averaged
+  state: {T: 300.0, P: 1 atm}
+
+species:
+- name: AL
+  composition: {Al: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [3.11146855, -3.57363458e-03, 8.02692389e-06, -7.89637203e-09, 
+        2.83934686e-12, 3.88641504e+04, 2.83632371]
+    - [2.53152311, -4.16002811e-05, 2.40955537e-08, -7.15420953e-12, 
+        8.68511135e-16, 3.89410793e+04, 5.39170504]
+    note: g12/97
+  transport:
+    model: gas
+    geometry: atom
+    well-depth: 2750.0
+    diameter: 2.655
+- name: ALO
+  composition: {Al: 1, O: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [3.34913178, -7.30811097e-05, 7.10157373e-06, -1.06139198e-08, 
+        4.70712402e-12, 7057.28468, 6.97458001]
+    - [2.87812691, 1.9692028e-03, -3.86303536e-07, 7.31791832e-12, 
+        2.48454782e-15, 7288.72515, 9.56556843]
+    note: tpis96
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 542.0
+    diameter: 3.204
+- name: ALO2
+  composition: {Al: 1, O: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [4.34294502, 8.65076281e-03, -8.91492593e-06, 3.12927133e-09, 
+        9.49015044e-14, -6256.26126, 5.43603439]
+    - [6.82788443, 7.33105641e-04, -3.13759379e-07, 5.96366292e-11, 
+        -3.91258986e-15, -6862.25611, -7.06432998]
+    note: tpis96
+  transport:
+    model: gas
+    geometry: nonlinear
+    well-depth: 542.0
+    diameter: 3.34
+- name: AL2O
+  composition: {Al: 2, O: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [4.07405095, 0.0112981458, -1.66855499e-05, 1.20474407e-08, 
+        -3.43957451e-12, -1.94653414e+04, 4.50607534]
+    - [6.83557723, 6.85036558e-04, -2.693207e-07, 4.60912632e-11, 
+        -2.87128689e-15, -2.00793927e+04, -9.02360368]
+    note: tpis96
+  transport:
+    model: gas
+    geometry: nonlinear
+    well-depth: 542.0
+    diameter: 3.65
+- name: AL2O2
+  composition: {Al: 2, O: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [4.83765565, 0.0167010188, -2.23411191e-05, 1.48421603e-08, 
+        -3.9619641e-12, -5.04957125e+04, 2.97081413]
+    - [9.14886135, 1.38425788e-03, -5.42174706e-07, 9.25638703e-11, 
+        -5.75686436e-15, -5.15186949e+04, -18.4651707]
+    note: tpis96
+  transport:
+    model: gas
+    geometry: nonlinear
+    well-depth: 542.0
+    diameter: 3.65
+- name: AL2O3
+  composition: {Al: 2, O: 3}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [5.63487396, 0.0244276632, -3.39723369e-05, 2.31682578e-08, 
+        -6.27929522e-12, -6.8283885e+04, 0.014750103]
+    - [11.8224768, 1.72547969e-03, -6.77407352e-07, 1.15824576e-10, 
+        -7.21083594e-15, -6.97100145e+04, -30.5568543]
+    note: tpis96
+  transport:
+    model: gas
+    geometry: nonlinear
+    well-depth: 542.0
+    diameter: 3.65
+- name: AL2O3(L)
+  composition: {Al: 2, O: 3}
+  thermo:
+    model: NASA7
+    temperature-ranges: [2327.0, 6000.0]
+    data:
+    - [23.148241, 0.0, 0.0, 0.0, 0.0, -2.114052e+05, -138.60205]
+    note: |-
+      J12/79
+      AL2O3(L)          coda89AL  2O   3   0     0C   200.000  6000.000  1000.00     1
+       1.95922550E+01 0.00000000E+00 0.00000000E+00 0.00000000E+00 0.00000000E+00    2
+      -2.02769330E+05-1.10862203E+02 0.00000000E+00 0.00000000E+00 0.00000000E+00    3
+       0.00000000E+00 0.00000000E+00 0.00000000E+00 0.00000000E+00-2.01539237E+05    4
+  transport:
+    model: gas
+    geometry: nonlinear
+    well-depth: 542.0
+    diameter: 3.65
+- name: AL(L)
+  composition: {Al: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [933.61, 1000.0, 6000.0]
+    data:
+    - [3.8201899, -1.6756333e-06, 0.0, 0.0, 0.0, -95.7094068, 
+        -17.5321254]
+    - [3.83089866, -2.09027129e-05, 1.04271684e-08, -2.04841051e-12, 
+        1.39565517e-16, -99.7961566, -17.5914374]
+    note: REF ELEMEN  T 3/10
+  transport:
+    model: gas
+    geometry: atom
+    well-depth: 2750.0
+    diameter: 2.655
+- name: O
+  composition: {O: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [3.1682671, -3.27931884e-03, 6.64306396e-06, -6.12806624e-09, 
+        2.11265971e-12, 2.91222592e+04, 2.05193346]
+    - [2.54363697, -2.73162486e-05, -4.1902952e-09, 4.95481845e-12, 
+        -4.79553694e-16, 2.9226012e+04, 4.92229457]
+    note: L 1/90
+  transport:
+    model: gas
+    geometry: atom
+    well-depth: 107.0
+    diameter: 3.05
+- name: O2
+  composition: {O: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [3.78245636, -2.99673416e-03, 9.84730201e-06, -9.68129509e-09, 
+        3.24372837e-12, -1063.94356, 3.65767573]
+    - [3.66096065, 6.56365811e-04, -1.41149627e-07, 2.05797935e-11, 
+        -1.29913436e-15, -1215.97718, 3.41536279]
+    note: REF ELEMENT    RUS 89
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 107.0
+    diameter: 3.47
+- name: N2
+  composition: {N: 2}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 1000.0, 6000.0]
+    data:
+    - [3.53100528, -1.23660988e-04, -5.02999433e-07, 2.43530612e-09, 
+        -1.40881235e-12, -1046.97628, 2.96747038]
+    - [2.95257637, 1.3969004e-03, -4.92631603e-07, 7.86010195e-11, 
+        -4.60755204e-15, -923.948688, 5.87188762]
+    note: REF ELEMENT    G 8/02
+  transport:
+    model: gas
+    geometry: linear
+    well-depth: 542.0
+    diameter: 3.65
+- name: H
+  composition: {H: 1}
+  thermo:
+    model: NASA7
+    temperature-ranges: [200.0, 6000.0]
+    data:
+    - [2.5, 0.0, 0.0, 0.0, 0.0, 2.547366e+04, -0.44668285]
+    note: L 6/94
+  transport:
+    model: gas
+    geometry: atom
+    well-depth: 37.0
+    diameter: 2.708
+
+reactions:
+- equation: AL + O2 <=> ALO + O  # Reaction 1
+  rate-constant: {A: 9.72e+13, b: 0.0, Ea: 159.95}
+- equation: AL + O + M <=> ALO + M  # Reaction 2
+  type: three-body
+  rate-constant: {A: 3.0e+17, b: -1.0, Ea: 0.0}
+- equation: ALO + O2 <=> ALO2 + O  # Reaction 3
+  rate-constant: {A: 4.62e+14, b: 0.0, Ea: 1.98859e+04}
+- equation: AL2O3 <=> AL2O2 + O  # Reaction 4
+  rate-constant: {A: 3.0e+15, b: 0.0, Ea: 9.764999e+04}
+- equation: AL2O3 <=> ALO2 + ALO  # Reaction 5
+  rate-constant: {A: 3.0e+15, b: 0.0, Ea: 1.2699989e+05}
+- equation: AL2O2 <=> ALO + ALO  # Reaction 6
+  rate-constant: {A: 1.0e+15, b: 0.0, Ea: 1.179e+05}
+- equation: AL2O2 <=> AL + ALO2  # Reaction 7
+  rate-constant: {A: 1.0e+15, b: 0.0, Ea: 1.489e+05}
+- equation: AL2O2 <=> AL2O + O  # Reaction 8
+  rate-constant: {A: 1.0e+15, b: 0.0, Ea: 1.0424994e+05}
+- equation: ALO2 <=> ALO + O  # Reaction 9
+  rate-constant: {A: 1.0e+15, b: 0.0, Ea: 8.854986e+04}
+- equation: AL2O <=> ALO + AL  # Reaction 10
+  rate-constant: {A: 1.0e+15, b: 0.0, Ea: 1.3319994e+05}
+- equation: AL <=> AL(L)  # Reaction 11
+  rate-constant: {A: 1.0e+14, b: 0.0, Ea: 0.0}
+- equation: AL2O3 <=> AL2O3(L)  # Reaction 12
+  rate-constant: {A: 1.0e+14, b: 0.0, Ea: 0.0}
