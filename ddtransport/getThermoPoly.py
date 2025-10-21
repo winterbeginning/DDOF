@@ -6,8 +6,8 @@ import numpy as np
 # ===== Setting ====== #
 mech = "chem.yaml"
 Tlow = 300
-Thigh = 4500
-grids = 200
+Thigh = 4000
+grids = 10
 
 
 #---------------------#
@@ -58,13 +58,23 @@ with open("thermoPolynomial","w+") as f:
             oneOverKappaList.append(1./kappa)
             
         pmu = np.polyfit(TList, muList, 7)
-        pmu = np.poly1d(pmu)
+        pmu_poly = np.poly1d(pmu)
         pkappa = np.polyfit(TList, kappaList, 7)
-        pkappa= np.poly1d(pkappa)
+        pkappa_poly = np.poly1d(pkappa)
         poneOverKappa = np.polyfit(TList, oneOverKappaList, 7)
-        poneOverKappa = np.poly1d(poneOverKappa)
+        poneOverKappa_poly = np.poly1d(poneOverKappa)
         
-        #print(transportTemplate(species,pmu,pkappa,poneOverKappa))
+        mu_rmse = np.sqrt(np.mean((pmu_poly(TList) - muList)**2))
+        kappa_rmse = np.sqrt(np.mean((pkappa_poly(TList) - kappaList)**2))
+        oneOverKappa_rmse = np.sqrt(np.mean((poneOverKappa_poly(TList) - oneOverKappaList)**2))
+        
+        mu_max_rel = np.max(np.abs((pmu_poly(TList) - muList)/muList))
+        kappa_max_rel = np.max(np.abs((pkappa_poly(TList) - kappaList)/kappaList))
+        oneOverKappa_max_rel = np.max(np.abs((poneOverKappa_poly(TList) - oneOverKappaList)/oneOverKappaList))
+        
+        print(f"{species}: mu_RMSE={mu_rmse:.3e}, mu_max_rel={mu_max_rel:.2%}; "
+            f"kappa_RMSE={kappa_rmse:.3e}, kappa_max_rel={kappa_max_rel:.2%}; "
+            f"1/kappa_RMSE={oneOverKappa_rmse:.3e}, 1/kappa_max_rel={oneOverKappa_max_rel:.2%}")
 
-        f.write(transportTemplate(species,pmu,pkappa,poneOverKappa))
+        f.write(transportTemplate(species, pmu_poly, pkappa_poly, poneOverKappa_poly))
     
