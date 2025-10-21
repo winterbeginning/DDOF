@@ -108,10 +108,10 @@ class ddpolynomialTransport : public Thermo
     Polynomial<PolySize> muCoeffs_;
 
     //- Thermal conductivity ddpolynomial coefficients [W/m/K/K^i]
-    Polynomial<PolySize> kappaCoeffs_;
+    Polynomial<PolySize> kappaLowCoeffs_;
 
     //- 1/kappa ddpolynomial coefficients
-    Polynomial<PolySize> oneOverKappaCoeffs_;
+    Polynomial<PolySize> kappaHighCoeffs_;
 
 
     // Private Member Functions
@@ -119,8 +119,8 @@ class ddpolynomialTransport : public Thermo
     //- Construct from components
     inline ddpolynomialTransport(const Thermo &t,
                                  const Polynomial<PolySize> &muPoly,
-                                 const Polynomial<PolySize> &kappaPoly,
-                                 const Polynomial<PolySize> &oneOverKappaPoly);
+                                 const Polynomial<PolySize> &kappalowPoly,
+                                 const Polynomial<PolySize> &kappahighPoly);
 
 
 public:

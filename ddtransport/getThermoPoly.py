@@ -5,9 +5,9 @@ import numpy as np
 
 # ===== Setting ====== #
 mech = "chem.yaml"
-Tlow = 300
+Tlow = 200
 Thigh = 4000
-grids = 10
+grids = 200
 
 
 #---------------------#

@@ -34,11 +34,10 @@ Foam::ddpolynomialTransport<Thermo, PolySize>::ddpolynomialTransport(
     Thermo(name, dict),
     muCoeffs_(dict.subDict("transport")
                   .lookup("muCoeffs<" + Foam::name(PolySize) + '>')),
-    kappaCoeffs_(dict.subDict("transport")
-                     .lookup("kappaCoeffs<" + Foam::name(PolySize) + '>')),
-    oneOverKappaCoeffs_(
-        dict.subDict("transport")
-            .lookup("oneOverKappaCoeffs<" + Foam::name(PolySize) + '>'))
+    kappaLowCoeffs_(dict.subDict("transport")
+                        .lookup("kappaLowT<" + Foam::name(PolySize) + '>')),
+    kappaHighCoeffs_(dict.subDict("transport")
+                         .lookup("kappaHighT<" + Foam::name(PolySize) + '>'))
 {
 }
 
@@ -55,9 +54,9 @@ void Foam::ddpolynomialTransport<Thermo, PolySize>::write(Ostream &os) const
 
     dictionary dict("transport");
     dict.add(word("muCoeffs<" + Foam::name(PolySize) + '>'), muCoeffs_);
-    dict.add(word("kappaCoeffs<" + Foam::name(PolySize) + '>'), kappaCoeffs_);
-    dict.add(word("oneOverKappaCoeffs<" + Foam::name(PolySize) + '>'),
-             oneOverKappaCoeffs_);
+    dict.add(word("kappaLowT<" + Foam::name(PolySize) + '>'), kappaLowCoeffs_);
+    dict.add(word("kappaHighT<" + Foam::name(PolySize) + '>'),
+             kappaHighCoeffs_);
     os << indent << dict.dictName() << dict;
 
     os << decrIndent << token::END_BLOCK << nl;

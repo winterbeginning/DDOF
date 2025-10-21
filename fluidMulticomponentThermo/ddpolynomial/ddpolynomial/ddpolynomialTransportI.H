@@ -31,12 +31,12 @@ template <class Thermo, int PolySize>
 inline Foam::ddpolynomialTransport<Thermo, PolySize>::ddpolynomialTransport(
     const Thermo &t,
     const Polynomial<PolySize> &muCoeffs,
-    const Polynomial<PolySize> &kappaCoeffs,
-    const Polynomial<PolySize> &oneOverKappaCoeffs) :
+    const Polynomial<PolySize> &kappalowPoly,
+    const Polynomial<PolySize> &kappahighPoly) :
     Thermo(t),
     muCoeffs_(muCoeffs),
-    kappaCoeffs_(kappaCoeffs),
-    oneOverKappaCoeffs_(oneOverKappaCoeffs)
+    kappaLowCoeffs_(kappalowPoly),
+    kappaHighCoeffs_(kappahighPoly)
 {
 }
 
@@ -46,8 +46,8 @@ inline Foam::ddpolynomialTransport<Thermo, PolySize>::ddpolynomialTransport(
     const word &name, const ddpolynomialTransport &pt) :
     Thermo(name, pt),
     muCoeffs_(pt.muCoeffs_),
-    kappaCoeffs_(pt.kappaCoeffs_),
-    oneOverKappaCoeffs_(pt.oneOverKappaCoeffs_)
+    kappaLowCoeffs_(pt.kappaLowCoeffs_),
+    kappaHighCoeffs_(pt.kappaHighCoeffs_)
 {
 }
 
@@ -86,9 +86,16 @@ template <class Thermo, int PolySize>
 inline Foam::scalar Foam::ddpolynomialTransport<Thermo, PolySize>::kappa(
     const scalar p, const scalar T) const
 {
-
-    return 0.5 * (kappaCoeffs_.value(T) + 1 / oneOverKappaCoeffs_.value(T));
-    // return kappaCoeffs_.value(T);
+    if (T > 1000.0)
+    {
+        return kappaHighCoeffs_.value(T);
+    }
+    else
+    {
+        return kappaLowCoeffs_.value(T);
+    }
+    // return 0.5 * (kappaLowCoeffs_.value(T) + 1 / kappaHighCoeffs_.value(T));
+    // return kappaLowCoeffs_.value(T);
 }
 
 
@@ -106,8 +113,8 @@ inline void Foam::ddpolynomialTransport<Thermo, PolySize>::operator+=(
 
     if (mag(this->Y()) > small)
     {
-        scalar X1 = Y1 / W1 * this->W();
-        scalar X2 = pt.Y() / pt.W() * this->W();
+        scalar X1 = Y1 / W1;
+        scalar X2 = pt.Y() / pt.W();
         X1 = X1 / (X1 + X2);
         X2 = 1 - X1;
         Y1 /= this->Y();
@@ -115,9 +122,8 @@ inline void Foam::ddpolynomialTransport<Thermo, PolySize>::operator+=(
 
 
         muCoeffs_ = Y1 * muCoeffs_ + Y2 * pt.muCoeffs_;
-        kappaCoeffs_ = X1 * kappaCoeffs_ + X2 * pt.kappaCoeffs_;
-        oneOverKappaCoeffs_ =
-            X1 * oneOverKappaCoeffs_ + X2 * pt.oneOverKappaCoeffs_;
+        kappaLowCoeffs_ = X1 * kappaLowCoeffs_ + X2 * pt.kappaLowCoeffs_;
+        kappaHighCoeffs_ = X1 * kappaHighCoeffs_ + X2 * pt.kappaHighCoeffs_;
     }
 }
 
@@ -142,8 +148,8 @@ inline Foam::ddpolynomialTransport<Thermo, PolySize> Foam::operator+(
 
     if (mag(t.Y()) < small)
     {
-        return ddpolynomialTransport<Thermo>(
-            t, 0, pt1.muCoeffs_, pt1.kappaCoeffs_);
+        return ddpolynomialTransport<Thermo, PolySize>(
+            t, pt1.muCoeffs_, pt1.kappaLowCoeffs_, pt1.kappaHighCoeffs_);
     }
     else
     {
@@ -159,8 +165,8 @@ inline Foam::ddpolynomialTransport<Thermo, PolySize> Foam::operator+(
         return ddpolynomialTransport<Thermo, PolySize>(
             t,
             Y1 * pt1.muCoeffs_ + Y2 * pt2.muCoeffs_,
-            X1 * pt1.kappaCoeffs_ + X2 * pt2.kappaCoeffs_,
-            X1 * pt1.oneOverKappaCoeffs_ + X2 * pt2.oneOverKappaCoeffs_);
+            X1 * pt1.kappaLowCoeffs_ + X2 * pt2.kappaLowCoeffs_,
+            X1 * pt1.kappaHighCoeffs_ + X2 * pt2.kappaHighCoeffs_);
     }
 }
 
@@ -172,8 +178,8 @@ inline Foam::ddpolynomialTransport<Thermo, PolySize> Foam::operator*(
     return ddpolynomialTransport<Thermo, PolySize>(
         s * static_cast<const Thermo &>(pt),
         pt.muCoeffs_,
-        pt.kappaCoeffs_,
-        pt.oneOverKappaCoeffs_);
+        pt.kappaLowCoeffs_,
+        pt.kappaHighCoeffs_);
 }
 
 
