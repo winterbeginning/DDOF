@@ -8,7 +8,7 @@ Thigh = 6000
 grids = 200
 
 # 分段拟合开关及区间设置
-split_kappa = False  # True=分段，False=单区间
+split_kappa = True  # True=分段，False=单区间
 low_T_range = (200, 1000)
 high_T_range = (1000, 6000)
 low_grids = 100

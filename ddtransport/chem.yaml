@@ -1,7 +1,7 @@
 generator: ck2yaml
 input-files: [chem.inp, therm.dat, tran.dat]
 cantera-version: 3.1.0
-date: Wed, 22 Oct 2025 00:37:59 +0800
+date: Wed, 22 Oct 2025 13:08:03 +0800
 
 units: {length: cm, time: s, quantity: mol, activation-energy: cal/mol}
 
@@ -163,15 +163,10 @@ species:
   composition: {Al: 2, O: 3}
   thermo:
     model: NASA7
-    # temperature-ranges: [2327.0, 6000.0]
-    # data:
-    # - [19.592255, 0.0, 0.0, 0.0, 0.0, -2.0276933e+05, -110.862203]
-    temperature-ranges: [200.0, 1000.0, 6000.0]
+    temperature-ranges: [200.0, 2327.0, 6000.0]
     data:
-    - [3.53100528, -1.23660988e-04, -5.02999433e-07, 2.43530612e-09, 
-        -1.40881235e-12, -1046.97628, 2.96747038]
-    - [2.95257637, 1.3969004e-03, -4.92631603e-07, 7.86010195e-11, 
-        -4.60755204e-15, -923.948688, 5.87188762]
+    - [19.592255, 0.0, 0.0, 0.0, 0.0, -2.0276933e+05, -110.862203]
+    - [19.592255, 0.0, 0.0, 0.0, 0.0, -2.0276933e+05, -110.862203]
     note: coda89
   transport:
     model: gas
@@ -201,5 +196,5 @@ reactions:
   rate-constant: {A: 1.0e+15, b: 0.0, Ea: 8.854986e+04}
 - equation: AL2O <=> ALO + AL  # Reaction 10
   rate-constant: {A: 1.0e+15, b: 0.0, Ea: 1.3319994e+05}
-  note: |
-    AL2O3<=>AL2O3(L)                1.00E14           0.00                0.00
+- equation: AL2O3 <=> AL2O3(L)  # Reaction 11
+  rate-constant: {A: 1.0e+14, b: 0.0, Ea: 0.0}

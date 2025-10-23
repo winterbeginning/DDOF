@@ -59,11 +59,12 @@ def compute_cantera_kappa(gas, species, T):
 
 def plot_species_with_cantera(ax, species, low_coeffs, high_coeffs, gas):
     T_full = np.linspace(200, 4000, 1000)
+    T_cantera = np.linspace(200,4000,50)
     # Cantera reference (compute once)
-    can_vals = compute_cantera_kappa(gas, species, T_full)
+    can_vals = compute_cantera_kappa(gas, species, T_cantera)
 
     # plot Cantera as points (small)
-    ax.plot(T_full, can_vals, color='k', marker='.', linestyle='None', markersize=3, label=f"{species} Cantera")
+    ax.plot(T_cantera, can_vals, c='k', marker='o', ls='None', ms=5,mfc = 'none',mec = 'blue', label=f"{species} Cantera")
 
     # plot fitted polynomials only on their intervals (solid)
     if low_coeffs:
