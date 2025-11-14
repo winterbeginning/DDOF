@@ -33,7 +33,9 @@ License
 // -------------------------------------------------------------------------- //
 
 #include "TabulatedFickianFourier.H"
+#include "schmidtNumberFourier.H"
 makeLaminarThermophysicalTransportModel(TabulatedFickianFourier);
+makeLaminarThermophysicalTransportModel(schmidtNumberFourier);
 
 
 // -------------------------------------------------------------------------- //
